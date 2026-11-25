@@ -394,7 +394,7 @@ public class EasyTeleportsPlugin extends Plugin
 		}
 	}
 
-	@Subscribe
+	@Subscribe(priority = -2.0f)
 	public void onMenuEntryAdded(MenuEntryAdded e)
 	{
 		// Uncomment to figure out what the action params are for different menu entries
@@ -408,7 +408,7 @@ public class EasyTeleportsPlugin extends Plugin
 					getApplicableReplacements(r -> r.isApplicableToInventory(getItemId(menuEntry)));
 
 			clientThread.invokeLater(() -> applyReplacement(applicableReplacements,
-					menuEntry,
+					e.getMenuEntry(),
 					MenuEntry::getOption,
 					MenuEntry::setOption,
 					/* shadowedText = */ false));
@@ -435,7 +435,7 @@ public class EasyTeleportsPlugin extends Plugin
 		}
 	}
 
-	@Subscribe
+	@Subscribe(priority = -2.0f)
 	public void onPostMenuSort(net.runelite.api.events.PostMenuSort e)
 	{
 		MenuEntry[] entries = client.getMenuEntries();
@@ -554,7 +554,7 @@ public class EasyTeleportsPlugin extends Plugin
 	{
 		Widget widget = entry.getWidget();
 		return entry.getParam1() == ACTION_PARAM_1_INVENTORY ||
-			widget != null && widget.getId() == InterfaceID.Inventory.ITEMS;
+			(widget != null && widget.getId() == InterfaceID.Inventory.ITEMS);
 	}
 
 	private static int getItemId(MenuEntry entry)
